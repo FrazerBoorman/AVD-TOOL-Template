@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AVD Tool Template</title>
+  <meta name="color-scheme" content="light dark" />
+  <!-- Google OAuth client ID -->
+  <meta name="google-oauth-client-id"
+        content="105230737516-l8tlnck4idde83pjetrotobpt8borvts.apps.googleusercontent.com" />
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <style>
+    :root {
+      --bg:#0f172a; --card:#020617; --panel:#020617; --border:#1e293b;
+      --text:#e5e7eb; --muted:#94a3b8; --accent:#38bdf8; --accent-soft:rgba(56,189,248,0.12);
+      --danger:#ef4444;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg:#f8fafc; --card:#ffffff; --panel:#ffffff; --border:#e5e7eb;
+        --text:#020617; --muted:#475569; --accent:#0ea5e9; --accent-soft:rgba(14,165,233,0.10);
+        --danger:#b91c1c;
+      }
+    }
+
+    * { box-sizing:border-box; }
+    html, body { height:100%; }
+
+    body {
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(900px 600px at 5% 0%, rgba(56,189,248,0.10), transparent 55%),
+        radial-gradient(800px 600px at 95% 0%, rgba(129,140,248,0.12), transparent 50%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin:0 auto;
+      padding:18px;
+    }
+
+    .card {
+      background:var(--card);
+      border-radius:20px;
+      border:1px solid var(--border);
+      padding:18px 18px 22px;
+      box-shadow:0 18px 40px rgba(15,23,42,0.45);
+      margin-bottom:16px;
+    }
+
+    h1 {
+      margin:0 0 4px;
+      font-size:26px;
+      letter-spacing:.02em;
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .version {
+      font-size:11px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+    }
+
+    .muted { color:var(--muted); font-size:14px; }
+
+    .pill {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:11px;
+      padding:3px 9px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      text-decoration:none;
+      cursor:pointer;
+      transition: border-color .12s ease, background .12s ease, color .12s ease,
+                  transform .06s ease, box-shadow .12s ease;
+    }
+    .pill:hover {
+      border-color:var(--accent);
+      color:var(--accent);
+      background:var(--accent-soft);
+      transform:translateY(-0.5px);
+      box-shadow:0 3px 8px rgba(15,23,42,0.35);
+    }
+
+    .section {
+      margin-top:14px;
+      padding:12px;
+      border-radius:12px;
+      background:rgba(15,23,42,0.65);
+      border:1px dashed var(--border);
+    }
+    @media (prefers-color-scheme: light) {
+      .section { background:#f9fafb; }
+    }
+
+    .section-title {
+      font-size:13px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    label {
+      font-size:13px;
+      font-weight:600;
+      margin-bottom:4px;
+      display:block;
+    }
+
+    input, select, textarea, button {
+      font-size:14px;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--text);
+      box-sizing:border-box;
+    }
+
+    input, select, textarea {
+      width:100%;
+    }
+
+    textarea { resize:vertical; min-height:70px; }
+
+    input::placeholder, textarea::placeholder { color:var(--muted); }
+
+    .small-note,
+    .note {
+      font-size:11px;
+      color:var(--muted);
+      margin-top:3px;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:10px;
+    }
+
+    .btnrow, .btn-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+
+    button {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      cursor:pointer;
+      transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+    }
+
+    button.primary {
+      border-color:var(--accent);
+      background:linear-gradient(180deg,var(--accent-soft),transparent);
+    }
+
+    button:hover {
+      transform:translateY(-1px);
+      box-shadow:0 4px 12px rgba(15,23,42,0.5);
+    }
+
+    .danger {
+      border-color:var(--danger) !important;
+      color:var(--danger);
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:12px;
+      margin-top:10px;
+    }
+    th, td {
+      border:1px solid var(--border);
+      padding:6px 8px;
+      vertical-align:top;
+      text-align:left;
+    }
+    th {
+      background:rgba(15,23,42,0.6);
+      font-weight:600;
+    }
+    @media (prefers-color-scheme: light) {
+      th { background:#e5e7eb; }
+    }
+
+    .badge {
+      display:inline-block;
+      font-size:12px;
+      border:1px solid var(--border);
+      padding:2px 8px;
+      border-radius:999px;
+      color:var(--muted);
+    }
+
+    details.debug,
+    details.api,
+    details.calendar-settings {
+      margin-top:10px;
+      border-radius:12px;
+      border:1px dashed var(--border);
+      padding:8px 10px;
+      background:rgba(15,23,42,0.4);
+      font-size:11px;
+    }
+    @media (prefers-color-scheme: light) {
+      details.debug,
+      details.api,
+      details.calendar-settings { background:#f3f4f6; }
+    }
+
+    details.debug summary,
+    details.api summary,
+    details.calendar-settings summary {
+      cursor:pointer;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    details.debug pre {
+      white-space:pre-wrap;
+      font-size:11px;
+      margin-top:4px;
+    }
+
+    .danger-text { color:var(--danger); }
+
+    .tool-info-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap:8px;
+      font-size:13px;
+    }
+    .tool-info-item-label {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:2px;
+    }
+    .tool-info-item-value {
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <!-- Header with tool name, version + tools pill -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">
+        <div>
+          <h1>
+            <span id="toolNameHeading">AVD Tool Template</span>
+            <span id="toolVersionBadge" class="version">v0.1</span>
+          </h1>
+          <div class="muted" id="toolShortDescription">
+            Base layout for AVD tools with shared calendar, OpenAI key handling, debug panel and consistent styling.
+          </div>
+        </div>
+        <a href="https://frazerboorman.github.io/" class="pill">Frazer · AVD TOOLS</a>
+      </div>
+
+      <!-- Tool info block -->
+      <div class="section">
+        <div class="section-title">Tool info</div>
+        <div class="tool-info-grid">
+          <div>
+            <div class="tool-info-item-label">Tool name</div>
+            <div class="tool-info-item-value" id="toolNameInfo">AVD Tool Template</div>
+          </div>
+          <div>
+            <div class="tool-info-item-label">Version</div>
+            <div class="tool-info-item-value" id="toolVersionInfo">v0.1</div>
+          </div>
+          <div>
+            <div class="tool-info-item-label">Last updated</div>
+            <div class="tool-info-item-value" id="toolLastUpdatedInfo">2025-11-26</div>
+          </div>
+          <div>
+            <div class="tool-info-item-label">Tool code</div>
+            <div class="tool-info-item-value" id="toolCodeInfo">TEMPLATE-BASE</div>
+          </div>
+        </div>
+        <div class="small-note" style="margin-top:6px;" id="toolNotesInfo">
+          Notes: Clone this file per tool and update the tool name, version, last updated date and code in the JS constants.
+        </div>
+      </div>
+
+      <!-- STEP 1 – Calendar (optional) -->
+      <div class="section">
+        <div class="section-title">Step 1 – (Optional) Load events from Google Calendar</div>
+        <div class="grid">
+          <div>
+            <label for="fromDate">From</label>
+            <input id="fromDate" type="date" />
+          </div>
+          <div>
+            <label for="toDate">To</label>
+            <input id="toDate" type="date" />
+          </div>
+          <div style="align-self:end;">
+            <div class="btnrow">
+              <button id="signinBtn" class="primary" type="button">Sign in to Google</button>
+              <button id="fetchEventsBtn" type="button">Load events</button>
+            </div>
+            <div id="status" class="small-note">Status: Waiting for sign-in…</div>
+          </div>
+        </div>
+
+        <div class="grid" style="margin-top:12px;">
+          <div>
+            <label for="eventSelect">Events</label>
+            <select id="eventSelect">
+              <option value="">— Events will appear here —</option>
+            </select>
+          </div>
+          <div style="align-self:end;">
+            <button id="useEventBtn" type="button">Use selected event</button>
+            <div class="small-note">
+              Hook this into your tool logic to auto-fill dates / job references.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 – TOOL-SPECIFIC UI AREA -->
+      <div class="section">
+        <div class="section-title">Step 2 – Tool-specific inputs & actions</div>
+        <!-- TOOL-SPECIFIC UI START -->
+        <div class="grid">
+          <div>
+            <label for="exampleInput">Example input (replace with your fields)</label>
+            <input id="exampleInput" placeholder="e.g. Job reference, client, etc." />
+          </div>
+          <div>
+            <label>&nbsp;</label>
+            <button id="exampleActionBtn" class="primary" type="button">Run example action</button>
+          </div>
+        </div>
+        <div class="small-note">
+          Replace this whole block with your tool’s form controls. The debug panel and OpenAI helpers are ready to use.
+        </div>
+        <!-- TOOL-SPECIFIC UI END -->
+      </div>
+
+      <!-- STEP 3 – Outputs -->
+      <div class="section">
+        <div class="section-title">Step 3 – Outputs</div>
+        <label for="outputBox">Output / results area</label>
+        <textarea id="outputBox" placeholder="Output from your tool goes here…" rows="6"></textarea>
+      </div>
+
+      <!-- OpenAI test status inside main card so it's visible -->
+      <div class="section">
+        <div class="section-title">OpenAI integration status</div>
+        <div id="openAiStatus" class="small-note">
+          Use the “Test OpenAI call” button in the API key panel once your key is saved.
+        </div>
+      </div>
+    </div>
+
+    <!-- Global debug panel -->
+    <details class="debug">
+      <summary>Debug panel</summary>
+      <pre id="debugLog">(empty)</pre>
+    </details>
+
+    <!-- Calendar settings (Calendar ID hidden by default) -->
+    <details class="calendar-settings">
+      <summary>Calendar settings (Calendar ID)</summary>
+      <div class="small-note" style="margin-top:4px;">
+        Advanced: change which Google Calendar this tool reads from. Usually leave as-is.
+      </div>
+      <div style="margin-top:6px;max-width:460px;">
+        <label for="calendarId">Calendar ID</label>
+        <input id="calendarId"
+               value="bb14db72acb2ffd4230316960d02103fa66e54901522ff7b8113eec682f6d42e@group.calendar.google.com" />
+        <div class="small-note">
+          Same shared calendar you use in the other AVD tools.
+        </div>
+      </div>
+    </details>
+
+    <!-- API KEY PANEL (OpenAI – shared across tools) -->
+    <details class="api">
+      <summary>API key (OpenAI) – hidden by default</summary>
+      <div class="small-note" style="margin-top:4px;">
+        Stored locally in <code>localStorage['avd_job_report_openai_key']</code>. Not sent anywhere
+        except OpenAI’s API. All AVD tools share this key.
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap;">
+        <input id="apiKeyInput" type="password" placeholder="sk-..." style="flex:1 1 220px;max-width:380px;" />
+        <button type="button" id="saveApiKeyBtn">Save</button>
+        <button type="button" id="clearApiKeyBtn">Forget</button>
+        <button type="button" id="testOpenAiBtn">Test OpenAI call</button>
+      </div>
+      <div id="apiKeyStatus" class="small-note"></div>
+    </details>
+  </div>
+
+  <script>
+    // =========================
+    // TOOL METADATA CONSTANTS
+    // =========================
+    const TOOL_NAME = "AVD Tool Template";
+    const TOOL_VERSION = "v0.1";
+    const TOOL_LAST_UPDATED = "2025-11-26";
+    const TOOL_CODE = "TEMPLATE-BASE";
+
+    // =========================
+    // CONFIG / SHARED CONSTANTS
+    // =========================
+    const CLIENT_ID = "105230737516-l8tlnck4idde83pjetrotobpt8borvts.apps.googleusercontent.com";
+    const SCOPES   = "https://www.googleapis.com/auth/calendar.readonly";
+    const OPENAI_KEY_STORAGE = "avd_job_report_openai_key";
+    const TEXT_MODEL = "gpt-4.1-mini";
+
+    let tokenClient = null;
+    let accessToken = null;
+    let currentEvents = [];
+
+    // ============== DEBUG LOGGER ==============
+    function logDebug(msg) {
+      try {
+        const el = document.getElem
