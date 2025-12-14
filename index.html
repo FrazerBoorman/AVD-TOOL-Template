@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AVD Tool Template</title>
   <meta name="color-scheme" content="light dark" />
+
   <!-- Google OAuth client ID -->
   <meta name="google-oauth-client-id"
         content="105230737516-l8tlnck4idde83pjetrotobpt8borvts.apps.googleusercontent.com" />
+
   <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -15,19 +17,17 @@
     :root {
       --bg:#0f172a; --card:#020617; --panel:#020617; --border:#1e293b;
       --text:#e5e7eb; --muted:#94a3b8; --accent:#38bdf8; --accent-soft:rgba(56,189,248,0.12);
-      --danger:#ef4444;
+      --danger:#ef4444; --ok:#22c55e;
     }
     @media (prefers-color-scheme: light) {
       :root {
         --bg:#f8fafc; --card:#ffffff; --panel:#ffffff; --border:#e5e7eb;
         --text:#020617; --muted:#475569; --accent:#0ea5e9; --accent-soft:rgba(14,165,233,0.10);
-        --danger:#b91c1c;
+        --danger:#b91c1c; --ok:#16a34a;
       }
     }
-
     * { box-sizing:border-box; }
     html, body { height:100%; }
-
     body {
       margin:0;
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
@@ -38,12 +38,7 @@
       color:var(--text);
     }
 
-    .wrap {
-      max-width: 1200px;
-      margin:0 auto;
-      padding:18px;
-    }
-
+    .wrap { max-width:1200px; margin:0 auto; padding:18px; }
     .card {
       background:var(--card);
       border-radius:20px;
@@ -69,23 +64,29 @@
       border-radius:999px;
       border:1px solid var(--border);
       color:var(--muted);
+      cursor:pointer;
+      user-select:none;
+      transition:border-color .12s ease, background .12s ease, color .12s ease, transform .06s ease, box-shadow .12s ease;
+    }
+    .version:hover {
+      border-color:var(--accent);
+      color:var(--accent);
+      background:var(--accent-soft);
+      transform:translateY(-0.5px);
+      box-shadow:0 3px 8px rgba(15,23,42,0.35);
     }
 
     .muted { color:var(--muted); font-size:14px; }
 
     .pill {
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      font-size:11px;
-      padding:3px 9px;
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:11px; padding:3px 9px;
       border-radius:999px;
       border:1px solid var(--border);
       color:var(--muted);
       text-decoration:none;
       cursor:pointer;
-      transition: border-color .12s ease, background .12s ease, color .12s ease,
-                  transform .06s ease, box-shadow .12s ease;
+      transition: border-color .12s ease, background .12s ease, color .12s ease, transform .06s ease, box-shadow .12s ease;
     }
     .pill:hover {
       border-color:var(--accent);
@@ -102,9 +103,7 @@
       background:rgba(15,23,42,0.65);
       border:1px dashed var(--border);
     }
-    @media (prefers-color-scheme: light) {
-      .section { background:#f9fafb; }
-    }
+    @media (prefers-color-scheme: light) { .section { background:#f9fafb; } }
 
     .section-title {
       font-size:13px;
@@ -115,12 +114,7 @@
       margin-bottom:6px;
     }
 
-    label {
-      font-size:13px;
-      font-weight:600;
-      margin-bottom:4px;
-      display:block;
-    }
+    label { font-size:13px; font-weight:600; margin-bottom:4px; display:block; }
 
     input, select, textarea, button {
       font-size:14px;
@@ -131,90 +125,47 @@
       color:var(--text);
       box-sizing:border-box;
     }
-
-    input, select, textarea {
-      width:100%;
-    }
-
-    textarea { resize:vertical; min-height:70px; }
+    input, select, textarea { width:100%; }
+    textarea { resize:vertical; min-height:90px; }
 
     input::placeholder, textarea::placeholder { color:var(--muted); }
 
-    .small-note,
-    .note {
-      font-size:11px;
-      color:var(--muted);
-      margin-top:3px;
-    }
+    .small-note { font-size:11px; color:var(--muted); margin-top:3px; }
+    .ok { color:var(--ok); }
+    .bad { color:var(--danger); }
 
     .grid {
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap:10px;
     }
-
-    .btnrow, .btn-row {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
+    .btnrow {
+      display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;
     }
-
     button {
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
+      display:inline-flex; align-items:center; gap:6px;
       cursor:pointer;
       transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
     }
-
     button.primary {
       border-color:var(--accent);
       background:linear-gradient(180deg,var(--accent-soft),transparent);
     }
-
     button:hover {
       transform:translateY(-1px);
       box-shadow:0 4px 12px rgba(15,23,42,0.5);
     }
-
-    .danger {
-      border-color:var(--danger) !important;
+    button.danger {
+      border-color:var(--danger);
       color:var(--danger);
     }
 
-    table {
-      width:100%;
-      border-collapse:collapse;
-      font-size:12px;
-      margin-top:10px;
-    }
-    th, td {
-      border:1px solid var(--border);
-      padding:6px 8px;
-      vertical-align:top;
-      text-align:left;
-    }
-    th {
-      background:rgba(15,23,42,0.6);
-      font-weight:600;
-    }
-    @media (prefers-color-scheme: light) {
-      th { background:#e5e7eb; }
-    }
+    table { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+    th, td { border:1px solid var(--border); padding:6px 8px; vertical-align:top; text-align:left; }
+    th { background:rgba(15,23,42,0.6); font-weight:600; }
+    @media (prefers-color-scheme: light) { th { background:#e5e7eb; } }
 
-    .badge {
-      display:inline-block;
-      font-size:12px;
-      border:1px solid var(--border);
-      padding:2px 8px;
-      border-radius:999px;
-      color:var(--muted);
-    }
-
-    details.debug,
-    details.api,
-    details.calendar-settings {
+    details.debug, details.api, details.calendar-settings, details.ai-debugger {
       margin-top:10px;
       border-radius:12px;
       border:1px dashed var(--border);
@@ -223,91 +174,72 @@
       font-size:11px;
     }
     @media (prefers-color-scheme: light) {
-      details.debug,
-      details.api,
-      details.calendar-settings { background:#f3f4f6; }
+      details.debug, details.api, details.calendar-settings, details.ai-debugger { background:#f3f4f6; }
     }
-
-    details.debug summary,
-    details.api summary,
-    details.calendar-settings summary {
-      cursor:pointer;
-      font-size:12px;
-      color:var(--muted);
+    details.debug summary, details.api summary, details.calendar-settings summary, details.ai-debugger summary {
+      cursor:pointer; font-size:12px; color:var(--muted);
     }
-
     details.debug pre {
       white-space:pre-wrap;
       font-size:11px;
-      margin-top:4px;
+      margin-top:6px;
     }
 
-    .danger-text { color:var(--danger); }
-
-    .tool-info-grid {
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    .two-col {
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap:8px;
-      font-size:13px;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
     }
-    .tool-info-item-label {
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      color:var(--muted);
-      margin-bottom:2px;
-    }
-    .tool-info-item-value {
-      font-size:13px;
+    @media (max-width: 820px) {
+      .two-col { grid-template-columns: 1fr; }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="card">
-      <!-- Header with tool name, version + tools pill -->
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">
         <div>
           <h1>
             <span id="toolNameHeading">AVD Tool Template</span>
-            <span id="toolVersionBadge" class="version">v0.1</span>
+            <span id="toolVersionBadge" class="version" title="Click to copy this index.html to clipboard">v0.10</span>
           </h1>
           <div class="muted" id="toolShortDescription">
-            Base layout for AVD tools with shared calendar, OpenAI key handling, debug panel and consistent styling.
+            Template for new AVD tools: calendar loading, OpenAI key, debug, AI debugger, and consistent UI.
           </div>
         </div>
         <a href="https://frazerboorman.github.io/" class="pill">Frazer · AVD TOOLS</a>
       </div>
 
-      <!-- Tool info block -->
       <div class="section">
         <div class="section-title">Tool info</div>
-        <div class="tool-info-grid">
+        <div class="grid">
           <div>
-            <div class="tool-info-item-label">Tool name</div>
-            <div class="tool-info-item-value" id="toolNameInfo">AVD Tool Template</div>
+            <div class="small-note">Tool name</div>
+            <div id="toolNameInfo">AVD Tool Template</div>
           </div>
           <div>
-            <div class="tool-info-item-label">Version</div>
-            <div class="tool-info-item-value" id="toolVersionInfo">v0.1</div>
+            <div class="small-note">Version</div>
+            <div id="toolVersionInfo">v0.10</div>
           </div>
           <div>
-            <div class="tool-info-item-label">Last updated</div>
-            <div class="tool-info-item-value" id="toolLastUpdatedInfo">2025-11-26</div>
+            <div class="small-note">Last updated</div>
+            <div id="toolLastUpdatedInfo">2025-12-14</div>
           </div>
           <div>
-            <div class="tool-info-item-label">Tool code</div>
-            <div class="tool-info-item-value" id="toolCodeInfo">TEMPLATE-BASE</div>
+            <div class="small-note">Tool code</div>
+            <div id="toolCodeInfo">TEMPLATE-BASE</div>
           </div>
         </div>
         <div class="small-note" style="margin-top:6px;" id="toolNotesInfo">
-          Notes: Clone this file per tool and update the tool name, version, last updated date and code in the JS constants.
+          Clone this file per tool and update TOOL_* constants. Keep shared panels intact.
         </div>
       </div>
 
-      <!-- STEP 1 – Calendar (optional) -->
       <div class="section">
-        <div class="section-title">Step 1 – (Optional) Load events from Google Calendar</div>
+        <div class="section-title">Step 1 – Calendar (optional)</div>
         <div class="grid">
           <div>
             <label for="fromDate">From</label>
@@ -323,6 +255,7 @@
               <button id="fetchEventsBtn" type="button">Load events</button>
             </div>
             <div id="status" class="small-note">Status: Waiting for sign-in…</div>
+            <div id="calendarHint" class="small-note"></div>
           </div>
         </div>
 
@@ -332,88 +265,113 @@
             <select id="eventSelect">
               <option value="">— Events will appear here —</option>
             </select>
+            <div class="small-note">Uses advanced date range. Future events are included.</div>
           </div>
           <div style="align-self:end;">
             <button id="useEventBtn" type="button">Use selected event</button>
-            <div class="small-note">
-              Hook this into your tool logic to auto-fill dates / job references.
-            </div>
+            <div class="small-note">Template hook: wire this into your tool to auto-fill fields.</div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 2 – TOOL-SPECIFIC UI AREA -->
       <div class="section">
-        <div class="section-title">Step 2 – Tool-specific inputs & actions</div>
-        <!-- TOOL-SPECIFIC UI START -->
+        <div class="section-title">Step 2 – Tool-specific UI</div>
         <div class="grid">
           <div>
-            <label for="exampleInput">Example input (replace with your fields)</label>
-            <input id="exampleInput" placeholder="e.g. Job reference, client, etc." />
+            <label for="employee">Employee (optional)</label>
+            <input id="employee" placeholder="Derived from Calendar ID if possible. Defaults to Frazer." />
+            <div class="small-note">Template helper for tools that have an employee field.</div>
           </div>
           <div>
-            <label>&nbsp;</label>
+            <label for="exampleInput">Example input</label>
+            <input id="exampleInput" placeholder="e.g. Job reference, client, etc." />
+          </div>
+          <div style="align-self:end;">
             <button id="exampleActionBtn" class="primary" type="button">Run example action</button>
+            <div class="small-note">Replace with your tool’s primary action.</div>
           </div>
         </div>
-        <div class="small-note">
-          Replace this whole block with your tool’s form controls. The debug panel and OpenAI helpers are ready to use.
-        </div>
-        <!-- TOOL-SPECIFIC UI END -->
       </div>
 
-      <!-- STEP 3 – Outputs -->
       <div class="section">
         <div class="section-title">Step 3 – Outputs</div>
-        <label for="outputBox">Output / results area</label>
-        <textarea id="outputBox" placeholder="Output from your tool goes here…" rows="6"></textarea>
+        <label for="outputBox">Output / results</label>
+        <textarea id="outputBox" placeholder="Output from your tool goes here…" rows="7"></textarea>
       </div>
 
-      <!-- OpenAI test status inside main card so it's visible -->
       <div class="section">
         <div class="section-title">OpenAI integration status</div>
-        <div id="openAiStatus" class="small-note">
-          Use the “Test OpenAI call” button in the API key panel once your key is saved.
-        </div>
+        <div id="openAiStatus" class="small-note">Save a key in the API panel, then click “Test OpenAI call”.</div>
       </div>
     </div>
 
-    <!-- Global debug panel -->
     <details class="debug">
       <summary>Debug panel</summary>
       <pre id="debugLog">(empty)</pre>
     </details>
 
-    <!-- Calendar settings (Calendar ID hidden by default) -->
     <details class="calendar-settings">
       <summary>Calendar settings (Calendar ID)</summary>
       <div class="small-note" style="margin-top:4px;">
         Advanced: change which Google Calendar this tool reads from. Usually leave as-is.
       </div>
-      <div style="margin-top:6px;max-width:460px;">
+      <div style="margin-top:6px;max-width:520px;">
         <label for="calendarId">Calendar ID</label>
         <input id="calendarId"
                value="bb14db72acb2ffd4230316960d02103fa66e54901522ff7b8113eec682f6d42e@group.calendar.google.com" />
-        <div class="small-note">
-          Same shared calendar you use in the other AVD tools.
-        </div>
+        <div class="small-note" id="calendarIdDerivedNote"></div>
       </div>
     </details>
 
-    <!-- API KEY PANEL (OpenAI – shared across tools) -->
     <details class="api">
       <summary>API key (OpenAI) – hidden by default</summary>
       <div class="small-note" style="margin-top:4px;">
-        Stored locally in <code>localStorage['avd_job_report_openai_key']</code>. Not sent anywhere
-        except OpenAI’s API. All AVD tools share this key.
+        Stored locally in <code>localStorage['avd_job_report_openai_key']</code>. Not sent anywhere except OpenAI’s API.
       </div>
-      <div style="display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap;">
-        <input id="apiKeyInput" type="password" placeholder="sk-..." style="flex:1 1 220px;max-width:380px;" />
+
+      <div class="grid" style="margin-top:10px;">
+        <div>
+          <label for="apiKeyInput">OpenAI API key</label>
+          <input id="apiKeyInput" type="password" placeholder="sk-..." />
+          <div id="apiKeyStatus" class="small-note"></div>
+        </div>
+        <div>
+          <label for="modelSelect">Preferred model (optional)</label>
+          <select id="modelSelect"></select>
+          <div class="small-note">Template uses a candidate list and falls back automatically.</div>
+        </div>
+      </div>
+
+      <div class="btnrow" style="margin-top:10px;">
         <button type="button" id="saveApiKeyBtn">Save</button>
         <button type="button" id="clearApiKeyBtn">Forget</button>
-        <button type="button" id="testOpenAiBtn">Test OpenAI call</button>
+        <button type="button" id="testOpenAiBtn" class="primary">Test OpenAI call</button>
       </div>
-      <div id="apiKeyStatus" class="small-note"></div>
+    </details>
+
+    <details class="ai-debugger">
+      <summary>AI Debugger (Be Strict) + Replacement index.html</summary>
+      <div class="small-note" style="margin-top:6px;">
+        Use this to paste AI output / diagnostics and generate a replacement <span class="mono">index.html</span> block for quick swaps.
+      </div>
+
+      <div class="two-col" style="margin-top:10px;">
+        <div>
+          <label for="aiDebuggerNotes">AI Debugger notes (Jobs/Reports wording allowed per tool)</label>
+          <textarea id="aiDebuggerNotes" placeholder="Paste AI output, errors, or notes here..."></textarea>
+          <div class="small-note">Keep wording specific to the tool for better AI accuracy.</div>
+        </div>
+        <div>
+          <label for="replacementIndex">Replacement index.html (paste over your file)</label>
+          <textarea id="replacementIndex" class="mono" placeholder="This is where the replacement index.html output goes..."></textarea>
+          <div class="small-note">Template doesn’t auto-generate code — this is a structured “drop zone”.</div>
+        </div>
+      </div>
+
+      <div class="btnrow" style="margin-top:10px;">
+        <button type="button" id="copyReplacementBtn">Copy replacement index.html</button>
+        <button type="button" id="clearAiDebuggerBtn" class="danger">Clear</button>
+      </div>
     </details>
   </div>
 
@@ -421,9 +379,11 @@
     // =========================
     // TOOL METADATA CONSTANTS
     // =========================
+    // Version scheme: v0.10, v0.11, v0.12 ...
+    // (Increment these per commit/update.)
     const TOOL_NAME = "AVD Tool Template";
-    const TOOL_VERSION = "v0.1";
-    const TOOL_LAST_UPDATED = "2025-11-26";
+    const TOOL_VERSION = "v0.10";
+    const TOOL_LAST_UPDATED = "2025-12-14";
     const TOOL_CODE = "TEMPLATE-BASE";
 
     // =========================
@@ -432,7 +392,15 @@
     const CLIENT_ID = "105230737516-l8tlnck4idde83pjetrotobpt8borvts.apps.googleusercontent.com";
     const SCOPES   = "https://www.googleapis.com/auth/calendar.readonly";
     const OPENAI_KEY_STORAGE = "avd_job_report_openai_key";
-    const TEXT_MODEL = "gpt-4.1-mini";
+
+    // Include GPT-5.2 as requested, plus fallbacks.
+    const OPENAI_MODEL_CANDIDATES = [
+      "gpt-5.2",
+      "gpt-5.2-mini",
+      "gpt-5.2-nano",
+      "gpt-4.1",
+      "gpt-4.1-mini"
+    ];
 
     let tokenClient = null;
     let accessToken = null;
@@ -441,4 +409,434 @@
     // ============== DEBUG LOGGER ==============
     function logDebug(msg) {
       try {
-        const el = document.getElem
+        const el = document.getElementById("debugLog");
+        if (!el) return;
+        const ts = new Date().toISOString().replace("T"," ").slice(0,19);
+        el.textContent += "[" + ts + "] " + msg + "\n";
+        el.scrollTop = el.scrollHeight;
+      } catch (e) {}
+    }
+
+    function setStatus(msg, ok) {
+      const el = document.getElementById("status");
+      if (!el) return;
+      el.textContent = "Status: " + msg;
+      el.className = "small-note " + (ok === false ? "bad" : (ok === true ? "ok" : ""));
+      logDebug("STATUS: " + msg);
+    }
+
+    function setOpenAiStatus(msg, ok) {
+      const el = document.getElementById("openAiStatus");
+      if (!el) return;
+      el.textContent = msg;
+      el.className = "small-note " + (ok === false ? "bad" : (ok === true ? "ok" : ""));
+      if (msg) logDebug("OPENAI: " + msg);
+    }
+
+    // =========================
+    // INIT TOOL INFO UI
+    // =========================
+    function initToolMeta() {
+      document.getElementById("toolNameHeading").textContent = TOOL_NAME;
+      document.getElementById("toolNameInfo").textContent = TOOL_NAME;
+
+      document.getElementById("toolVersionBadge").textContent = TOOL_VERSION;
+      document.getElementById("toolVersionInfo").textContent = TOOL_VERSION;
+
+      document.getElementById("toolLastUpdatedInfo").textContent = TOOL_LAST_UPDATED;
+      document.getElementById("toolCodeInfo").textContent = TOOL_CODE;
+    }
+
+    // =========================
+    // VERSION PILL: COPY INDEX.HTML
+    // =========================
+    async function copyWholeIndexToClipboard() {
+      try {
+        const html = "<!doctype html>\n" + document.documentElement.outerHTML;
+        await navigator.clipboard.writeText(html);
+        setStatus("Copied full index.html to clipboard.", true);
+      } catch (e) {
+        setStatus("Could not copy automatically (browser blocked clipboard).", false);
+      }
+    }
+
+    // =========================
+    // OPENAI KEY PANEL
+    // =========================
+    function refreshApiKeyStatus() {
+      const statusEl = document.getElementById("apiKeyStatus");
+      const key = localStorage.getItem(OPENAI_KEY_STORAGE);
+      statusEl.textContent = key ? "API key is stored in this browser." : "No API key stored yet.";
+    }
+
+    function handleSaveApiKey() {
+      const input = document.getElementById("apiKeyInput");
+      const v = (input.value || "").trim();
+      if (!v) { alert("Enter a key first."); return; }
+      localStorage.setItem(OPENAI_KEY_STORAGE, v);
+      input.value = "";
+      refreshApiKeyStatus();
+      setOpenAiStatus("API key saved. You can test OpenAI now.", true);
+      logDebug("OpenAI key saved to localStorage.");
+    }
+
+    function handleClearApiKey() {
+      localStorage.removeItem(OPENAI_KEY_STORAGE);
+      refreshApiKeyStatus();
+      setOpenAiStatus("API key cleared.", false);
+      logDebug("OpenAI key cleared.");
+    }
+
+    function initModelDropdown() {
+      const sel = document.getElementById("modelSelect");
+      sel.innerHTML = "";
+      for (const m of OPENAI_MODEL_CANDIDATES) {
+        const opt = document.createElement("option");
+        opt.value = m;
+        opt.textContent = m;
+        sel.appendChild(opt);
+      }
+      sel.value = OPENAI_MODEL_CANDIDATES[0];
+    }
+
+    function getPreferredModel() {
+      const sel = document.getElementById("modelSelect");
+      const chosen = sel && sel.value ? sel.value : "";
+      return chosen || OPENAI_MODEL_CANDIDATES[0];
+    }
+
+    async function tryOpenAiWithFallback(promptText) {
+      const apiKey = localStorage.getItem(OPENAI_KEY_STORAGE);
+      if (!apiKey) throw new Error("No API key set.");
+
+      const models = [];
+      const preferred = getPreferredModel();
+      if (preferred) models.push(preferred);
+      for (const m of OPENAI_MODEL_CANDIDATES) if (!models.includes(m)) models.push(m);
+
+      let lastErr = null;
+
+      for (const model of models) {
+        try {
+          logDebug("OpenAI test attempting model: " + model);
+
+          const res = await fetch("https://api.openai.com/v1/responses", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + apiKey
+            },
+            body: JSON.stringify({
+              model,
+              input: [
+                { role: "system", content: "You are a strict assistant. Reply with a single short sentence." },
+                { role: "user", content: promptText }
+              ]
+            })
+          });
+
+          if (!res.ok) {
+            const txt = await res.text().catch(() => "");
+            lastErr = new Error("OpenAI " + res.status + " (" + model + "): " + txt.slice(0, 300));
+            logDebug("OpenAI error: " + lastErr.message);
+            continue;
+          }
+
+          const data = await res.json();
+          let out = "";
+
+          // Typical Responses API shape
+          if (data && data.output && data.output[0] && data.output[0].content && data.output[0].content[0]) {
+            out = data.output[0].content[0].text || "";
+          }
+
+          return { modelUsed: model, text: out || "(no text returned)" };
+        } catch (e) {
+          lastErr = e;
+          logDebug("OpenAI network/parse error for model " + model + ": " + (e && e.message ? e.message : String(e)));
+        }
+      }
+
+      throw lastErr || new Error("OpenAI call failed.");
+    }
+
+    async function testOpenAiCall() {
+      setOpenAiStatus("Testing OpenAI…", true);
+      try {
+        const result = await tryOpenAiWithFallback("Say: OpenAI is connected.");
+        setOpenAiStatus("OpenAI OK (" + result.modelUsed + "): " + result.text, true);
+      } catch (e) {
+        setOpenAiStatus("OpenAI test failed: " + (e && e.message ? e.message : String(e)), false);
+      }
+    }
+
+    // =========================
+    // AI DEBUGGER CONTROLS
+    // =========================
+    async function copyReplacementIndex() {
+      const t = (document.getElementById("replacementIndex").value || "").trim();
+      if (!t) { alert("Replacement index.html is empty."); return; }
+      try {
+        await navigator.clipboard.writeText(t);
+        setStatus("Copied replacement index.html to clipboard.", true);
+      } catch (e) {
+        setStatus("Could not copy replacement index (browser blocked clipboard).", false);
+      }
+    }
+
+    function clearAiDebugger() {
+      document.getElementById("aiDebuggerNotes").value = "";
+      document.getElementById("replacementIndex").value = "";
+      setStatus("AI Debugger cleared.", true);
+    }
+
+    // =========================
+    // CALENDAR AUTH
+    // =========================
+    function initAuth() {
+      if (!window.google || !window.google.accounts || !window.google.accounts.oauth2) {
+        logDebug("initAuth: Google auth library not ready yet.");
+        return;
+      }
+
+      tokenClient = window.google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        prompt: "",
+        callback: (resp) => {
+          if (resp && resp.access_token) {
+            accessToken = resp.access_token;
+            setStatus("Signed in. Ready to load events.", true);
+          } else {
+            setStatus("Sign-in failed.", false);
+          }
+        }
+      });
+
+      logDebug("initAuth: tokenClient initialised.");
+    }
+
+    function signInManual() {
+      logDebug("signInManual: clicked.");
+      if (!tokenClient) initAuth();
+      if (!tokenClient) { setStatus("Google auth not ready (library not loaded).", false); return; }
+      tokenClient.requestAccessToken();
+    }
+
+    // =========================
+    // ADVANCED DATE RANGE (future events INCLUDED)
+    // =========================
+    function setDefaultDateRange() {
+      const fromEl = document.getElementById("fromDate");
+      const toEl = document.getElementById("toDate");
+      const now = new Date();
+
+      // Default: last 14 days -> next 14 days (includes future)
+      const start = new Date(now);
+      start.setDate(start.getDate() - 14);
+
+      const end = new Date(now);
+      end.setDate(end.getDate() + 14);
+
+      fromEl.value = start.toISOString().slice(0,10);
+      toEl.value = end.toISOString().slice(0,10);
+    }
+
+    function getRangeIso() {
+      const from = document.getElementById("fromDate").value;
+      const to = document.getElementById("toDate").value;
+
+      const start = from ? new Date(from + "T00:00:00") : null;
+      const end = to ? new Date(to + "T23:59:59.999") : null;
+
+      return { start, end };
+    }
+
+    function getEventStartDate(ev) {
+      if (!ev || !ev.start) return null;
+      if (ev.start.date) return new Date(ev.start.date + "T00:00:00Z");
+      if (ev.start.dateTime) return new Date(ev.start.dateTime);
+      return null;
+    }
+
+    function extractPrimaryDate(ev) {
+      if (!ev || !ev.start) return "";
+      if (ev.start.date) return ev.start.date;
+      if (ev.start.dateTime) return ev.start.dateTime.slice(0, 10);
+      return "";
+    }
+
+    async function loadEvents() {
+      if (!accessToken) { setStatus("Sign in first.", false); return; }
+
+      const calId = (document.getElementById("calendarId").value || "primary").trim();
+      const { start, end } = getRangeIso();
+
+      if (!start || !end) { setStatus("Pick From and To dates.", false); return; }
+      if (end < start) { setStatus("To date must be after From date.", false); return; }
+
+      const url = new URL("https://www.googleapis.com/calendar/v3/calendars/" + encodeURIComponent(calId) + "/events");
+      url.searchParams.set("singleEvents", "true");
+      url.searchParams.set("orderBy", "startTime");
+      url.searchParams.set("timeMin", start.toISOString());
+      url.searchParams.set("timeMax", end.toISOString());
+      url.searchParams.set("maxResults", "250");
+
+      logDebug("Calendar URL: " + url.toString());
+
+      const res = await fetch(url.toString(), { headers: { "Authorization": "Bearer " + accessToken } });
+      if (!res.ok) {
+        setStatus("Calendar API error " + res.status, false);
+        logDebug("Calendar API error " + res.status);
+        return;
+      }
+
+      const data = await res.json();
+      const items = data.items || [];
+
+      // IMPORTANT: do NOT filter out future events
+      const processed = items
+        .map(ev => ({ ev, startDate: getEventStartDate(ev) }))
+        .filter(x => x.startDate) // just ensure it has a date
+        .sort((a,b) => a.startDate - b.startDate);
+
+      currentEvents = processed.map(x => x.ev);
+
+      const sel = document.getElementById("eventSelect");
+      sel.innerHTML = "";
+
+      if (!currentEvents.length) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "No events in this range.";
+        sel.appendChild(opt);
+        setStatus("No events found in that date range.", false);
+        return;
+      }
+
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "— Select event —";
+      sel.appendChild(placeholder);
+
+      for (let i = 0; i < currentEvents.length; i++) {
+        const ev = currentEvents[i];
+        const d = extractPrimaryDate(ev);
+        const title = ev.summary || "(no title)";
+        const opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = (d ? (d + " – ") : "") + title;
+        sel.appendChild(opt);
+      }
+
+      setStatus("Loaded " + currentEvents.length + " events.", true);
+
+      // Template helper: derive employee name if field exists
+      deriveEmployeeFromCalendarId(calId);
+    }
+
+    // =========================
+    // EMPLOYEE DERIVATION (default Frazer)
+    // =========================
+    function deriveEmployeeFromCalendarId(calId) {
+      const employeeInput = document.getElementById("employee");
+      if (!employeeInput) return;
+
+      if (employeeInput.value && employeeInput.value.trim()) return;
+
+      // Default if we cannot derive properly
+      let derived = "";
+
+      if (calId && calId.includes("@")) {
+        const local = calId.split("@")[0] || "";
+        // if it looks like firstname.lastname
+        const parts = local.split(".").filter(Boolean);
+        if (parts.length >= 2) {
+          derived = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+        }
+      }
+
+      employeeInput.value = derived || "Frazer";
+
+      const note = document.getElementById("calendarIdDerivedNote");
+      if (note) {
+        note.textContent = "Employee defaulted to: " + employeeInput.value + " (derived from Calendar ID where possible).";
+      }
+    }
+
+    // =========================
+    // TEMPLATE HOOKS
+    // =========================
+    function useSelectedEvent() {
+      const sel = document.getElementById("eventSelect");
+      if (!sel.value) { alert("Pick an event first."); return; }
+
+      const ev = currentEvents[Number(sel.value)];
+      if (!ev) { alert("Event not found."); return; }
+
+      const out = document.getElementById("outputBox");
+      const title = ev.summary || "";
+      const date = extractPrimaryDate(ev);
+      const loc = ev.location || "";
+      out.value =
+        "Selected event:\n" +
+        "- Date: " + (date || "-") + "\n" +
+        "- Title: " + (title || "-") + "\n" +
+        "- Location: " + (loc || "-") + "\n\n" +
+        "Wire this into your tool logic.";
+    }
+
+    function runExampleAction() {
+      const v = (document.getElementById("exampleInput").value || "").trim();
+      document.getElementById("outputBox").value = v
+        ? ("Example action ran with input: " + v)
+        : "Example action ran (no input).";
+    }
+
+    // =========================
+    // INIT
+    // =========================
+    window.addEventListener("DOMContentLoaded", () => {
+      initToolMeta();
+      setDefaultDateRange();
+      initModelDropdown();
+      refreshApiKeyStatus();
+      setStatus("Waiting for sign-in…", true);
+
+      document.getElementById("toolVersionBadge").addEventListener("click", copyWholeIndexToClipboard);
+
+      document.getElementById("signinBtn").addEventListener("click", signInManual);
+      document.getElementById("fetchEventsBtn").addEventListener("click", () => loadEvents().catch(e => {
+        logDebug("loadEvents error: " + (e && e.message ? e.message : String(e)));
+        setStatus("Error loading events. See debug panel.", false);
+      }));
+      document.getElementById("useEventBtn").addEventListener("click", useSelectedEvent);
+
+      document.getElementById("exampleActionBtn").addEventListener("click", runExampleAction);
+
+      document.getElementById("saveApiKeyBtn").addEventListener("click", handleSaveApiKey);
+      document.getElementById("clearApiKeyBtn").addEventListener("click", handleClearApiKey);
+      document.getElementById("testOpenAiBtn").addEventListener("click", () => testOpenAiCall().catch(e => {
+        logDebug("testOpenAiCall error: " + (e && e.message ? e.message : String(e)));
+        setOpenAiStatus("OpenAI test failed. See debug panel.", false);
+      }));
+
+      document.getElementById("copyReplacementBtn").addEventListener("click", () => copyReplacementIndex().catch(()=>{}));
+      document.getElementById("clearAiDebuggerBtn").addEventListener("click", clearAiDebugger);
+
+      // Initialize Google auth
+      window.setTimeout(() => { try { initAuth(); } catch (e) { logDebug("initAuth error: " + e.message); } }, 0);
+
+      // Pre-derive employee from default calendar id
+      const calId = (document.getElementById("calendarId").value || "").trim();
+      deriveEmployeeFromCalendarId(calId);
+
+      // Keep employee derivation updated if Calendar ID changes
+      document.getElementById("calendarId").addEventListener("change", () => {
+        const v = (document.getElementById("calendarId").value || "").trim();
+        deriveEmployeeFromCalendarId(v);
+      });
+    });
+  </script>
+</body>
+</html>
